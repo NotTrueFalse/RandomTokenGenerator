@@ -18,7 +18,7 @@ function generateRandomToken($length = 56,$prefix="") {
     }
     $token = hash("sha3-224", $token);
     $token=add_letters($token,"ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0");
-    $token=$prefix.$token;
+    $token=$token;
     //remove 1 letter at then end then shuffle, then repeat the process until the length is correct
     while(strlen($token)>$length){
         $token=str_split($token);
@@ -26,9 +26,11 @@ function generateRandomToken($length = 56,$prefix="") {
         shuffle($token);
         $token=implode("",$token);
     }
+    $token=$prefix.$token;
+    if(strlen($token)!=$length){
+        $token=substr($token,0,$length);
+    }
     return $token;
 }
-if(isset($_GET["token"])){
-echo "<pre>".generateRandomToken(56,$_GET["token"])."</pre>";
-}
+echo "<pre>".generateRandomToken(56,isset($_GET["token"])?$_GET["token"]:"")."</pre>";
 ?>
