@@ -9,14 +9,14 @@ function add_letters($string,$letters){
 }
 
 function generateRandomToken($length = 56,$prefix="") {
+    // echo '<pre>func called '.$length.'</pre>'; #debug only (show the length of the token to generate, it's supposed to be random too)
     $token = bin2hex(random_bytes($length));
     $iterations = rand(2,5);
-    $algos = ["sha256", "sha512", "sha384","sha3-256","sha3-384","sha3-512"];
+    $algos = ["sha256", "sha512", "sha384","sha3-224","sha3-256","sha3-384","sha3-512"];
     for ($i = 0; $i < $iterations; $i++) {
         $hashAlgo = $algos[rand(0, count($algos) - 1)];
         $token = hash($hashAlgo, $token);
     }
-    $token = hash("sha3-224", $token);
     $token=add_letters($token,"ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0");
     $token=$token;
     //remove 1 letter at then end then shuffle, then repeat the process until the length is correct
@@ -31,5 +31,7 @@ function generateRandomToken($length = 56,$prefix="") {
     }
     return $prefix.$token;
 }
-echo "<pre>".generateRandomToken(56,isset($_GET["token"])?$_GET["token"]:"")."</pre>";
+$token = generateRandomToken(1024,isset($_GET["token"])?$_GET["token"]:"");
+echo "<pre>".$token."</pre>";
+// echo "<pre>".strlen($token)."</pre>";#again for debug only, to check the length of the token
 ?>
