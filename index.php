@@ -26,11 +26,7 @@ function generateRandomToken($length = 56,$prefix="") {
         shuffle($token);
         $token=implode("",$token);
     }
-    $token=$prefix.$token;
-    if(strlen($token)!=$length){
-        $token=substr($token,0,$length);
-    }
-    return $token;
+    return $prefix.$token;
 }
 echo "<pre>".generateRandomToken(56,isset($_GET["token"])?$_GET["token"]:"")."</pre>";
 ?>
