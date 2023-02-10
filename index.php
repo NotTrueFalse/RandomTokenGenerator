@@ -31,5 +31,5 @@ function generateRandomToken($length = 56,$prefix="") {
     }
     return $prefix.$token;
 }
-echo "<pre>".generateRandomToken(512,isset($_GET["token"])?$_GET["token"]:"")."</pre>";
+echo "<pre>".generateRandomToken(56,isset($_GET["token"])?$_GET["token"]:"")."</pre>";
 ?>
